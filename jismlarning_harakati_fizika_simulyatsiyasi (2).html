@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-Sinf Fizika: Jismlarning Harakati va Simulyatsiya</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        canvas {
+            touch-action: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-slate-800/80 backdrop-blur-md border-b border-slate-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">Fizika olami: 7-sinf</h1>
+                    <p class="text-xs text-slate-400">Mavzu: Jismlarning Harakati va Nisbiyligi</p>
+                </div>
+            </div>
+            <!-- Navigation Tabs -->
+            <nav class="flex flex-wrap gap-2 justify-center" id="nav-tabs">
+                <button onclick="switchTab('theory')" data-tab="theory" class="tab-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-indigo-600 text-white shadow-lg shadow-indigo-600/30">Dars Rejasi</button>
+                <button onclick="switchTab('sim1')" data-tab="sim1" class="tab-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-slate-700/60 text-slate-300 hover:bg-slate-700">1. Mexanik Harakat</button>
+                <button onclick="switchTab('sim2')" data-tab="sim2" class="tab-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-slate-700/60 text-slate-300 hover:bg-slate-700">2. Harakat Nisbiyligi</button>
+                <button onclick="switchTab('sim3')" data-tab="sim3" class="tab-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-slate-700/60 text-slate-300 hover:bg-slate-700">3. Sanoq Sistemasi</button>
+                <button onclick="switchTab('quiz')" data-tab="quiz" class="tab-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-slate-700/60 text-slate-300 hover:bg-slate-700">Test & Topshiriq</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl mx-auto w-full p-4 sm:p-6">
+
+        <!-- TAB 1: THEORY -->
+        <section id="tab-theory" class="tab-content space-y-6">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
+                <h2 class="text-2xl font-bold text-indigo-400 mb-4">📚 Dars Mazmuni va Tushuntirishlar</h2>
+                <p class="text-slate-300 mb-6 leading-relaxed">
+                    Hurmatli o'quvchi! Ushbu interaktiv darslikda biz jismning fazodagi holati o'zgarishi, uni kuzatish usullari va harakatning boshqa jismlarga bog'liqligini o'rganamiz.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-slate-900/60 border border-slate-700/70 p-5 rounded-xl shadow-md">
+                        <div class="text-indigo-400 font-bold text-lg mb-2 flex items-center gap-2">
+                            <span class="bg-indigo-500/20 px-2.5 py-1 rounded-lg text-sm">1</span> Mexanik harakat
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Vaqt o'tishi bilan jismning boshqa jismlarga nisbatan fazodagi holatining o'zgarishi. Agar o'rin o'zgarmasa — tinch holatda bo'ladi.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/60 border border-slate-700/70 p-5 rounded-xl shadow-md">
+                        <div class="text-cyan-400 font-bold text-lg mb-2 flex items-center gap-2">
+                            <span class="bg-cyan-500/20 px-2.5 py-1 rounded-lg text-sm">2</span> Harakat nisbiyligi
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Harakat yoki tinch holat qaysi jismga solishtirilayotganiga bog'liq. Harakat har doim qandaydir boshqa jismga nisbatan aniqlanadi.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/60 border border-slate-700/70 p-5 rounded-xl shadow-md">
+                        <div class="text-emerald-400 font-bold text-lg mb-2 flex items-center gap-2">
+                            <span class="bg-emerald-500/20 px-2.5 py-1 rounded-lg text-sm">3</span> Sanoq sistemasi
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Sanoq jism, unga bog'langan koordinatalar sistemasi va vaqtni o'lchaydigan asbob (soat) majmuasi sanoq sistemasi deyiladi.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-indigo-950/40 border border-indigo-800/40 rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <h4 class="font-semibold text-indigo-300">Simulyatsiyalarni sinab ko'rishga tayyormisiz?</h4>
+                        <p class="text-sm text-slate-400">Yuqoridagi menyulardan foydalanib jonli animatsiyalarni boshqaring!</p>
+                    </div>
+                    <button onclick="switchTab('sim1')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-indigo-600/30">
+                        Simulyatsiyani boshlash &rarr;
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULATION 1 - Mechanical Motion -->
+        <section id="tab-sim1" class="tab-content hidden space-y-6">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 backdrop-blur-sm">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-indigo-400">1. Mexanik Harakat Simulyatsiyasi</h2>
+                        <p class="text-slate-400 text-sm">Mashina va piyodaning daraxt va uyga (sanoq jismlarga) nisbatan harakatini kuzating.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="sim1State.running = !sim1State.running" id="sim1-toggle-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition shadow-lg shadow-emerald-600/20">
+                            Boshlash / To'xtatish
+                        </button>
+                        <button onclick="resetSim1()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded-xl text-sm font-medium transition">
+                            Qayta boshlash
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas container -->
+                <div class="relative w-full bg-slate-900 rounded-2xl border border-slate-700 overflow-hidden shadow-inner">
+                    <canvas id="canvasSim1" class="w-full h-80 block"></canvas>
+                    <div class="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md border border-slate-700/80 px-4 py-2 rounded-xl text-xs space-y-1">
+                        <div>Vaqt ($t$): <span id="sim1-time" class="font-mono text-cyan-400">0.0</span> s</div>
+                        <div>Mashina masofasi ($x$): <span id="sim1-pos" class="font-mono text-indigo-400">0</span> m</div>
+                    </div>
+                </div>
+
+                <!-- Controls & Info -->
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/60 space-y-3">
+                        <label class="block text-sm font-medium text-slate-300">Mashina tezligi: <span id="sim1-speed-val" class="text-indigo-400 font-bold">40</span> m/s</label>
+                        <input type="range" id="sim1-speed" min="10" max="80" value="40" class="w-full accent-indigo-500 cursor-pointer" oninput="updateSim1Speed(this.value)">
+                    </div>
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/60 flex items-center">
+                        <p class="text-sm text-slate-300">
+                            💡 <strong class="text-indigo-400">Tushuntirish:</strong> Mashina uy va daraxtga nisbatan o'z o'rnini o'zgartirmoqda — demak u mexanik harakatda. Daraxt esa yerga nisbatan tinch holatda turibdi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: SIMULATION 2 - Relative Motion -->
+        <section id="tab-sim2" class="tab-content hidden space-y-6">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 backdrop-blur-sm">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-cyan-400">2. Harakat Nisbiyligi (Avtobus va Yo'lovchi)</h2>
+                        <p class="text-slate-400 text-sm">Kuzatish nuqtasini tanlang va harakat nisbiyligini o'zingiz sinab ko'ring!</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="sim2State.running = !sim2State.running" id="sim2-toggle-btn" class="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition shadow-lg shadow-cyan-600/20">
+                            Ishga tushirish / To'xtatish
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Reference Frame Selector -->
+                <div class="flex flex-wrap gap-3 mb-4 bg-slate-900/80 p-4 rounded-xl border border-slate-700">
+                    <span class="text-sm font-semibold text-slate-300 self-center">Kuzatuvchi (Sanoq jism):</span>
+                    <button onclick="setReferenceFrame('road')" id="ref-road" class="ref-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-cyan-600 text-white">Bekatdagi odam</button>
+                    <button onclick="setReferenceFrame('bus')" id="ref-bus" class="ref-btn px-3 py-1.5 rounded-lg text-xs font-medium transition bg-slate-700 text-slate-300">Avtobus ichidagi yo'lovchi</button>
+                </div>
+
+                <!-- Canvas container -->
+                <div class="relative w-full bg-slate-900 rounded-2xl border border-slate-700 overflow-hidden shadow-inner">
+                    <canvas id="canvasSim2" class="w-full h-80 block"></canvas>
+                    <div class="absolute top-4 right-4 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 px-4 py-2 rounded-xl text-xs space-y-1">
+                        <div>Tanlangan kuzatuvchi: <span id="ref-name" class="font-semibold text-cyan-400">Bekatdagi odam</span></div>
+                        <div>Yo'lovchi holati: <span id="passenger-rel-status" class="font-semibold text-emerald-400">Harakatda</span></div>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-slate-900/60 p-5 rounded-xl border border-slate-700/60">
+                    <h4 class="font-semibold text-cyan-300 mb-2">Nisbiylik siri nimada?</h4>
+                    <p id="sim2-explanation" class="text-sm text-slate-300 leading-relaxed">
+                        Agar siz <strong>bekatdagi odam</strong> bo'lsangiz, avtobusdagi yo'lovchi yuqori tezlikda o'tib ketayotganini ko'rasiz. Agar siz <strong>avtobus ichidagi yo'lovchi</strong> bo'lsangiz, yonboshdagi yo'ldoshga nisbatan tinch o'tirgandek ko'rinasiz (garchi avtobus harakatlansa ham).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: SIMULATION 3 - Coordinate System -->
+        <section id="tab-sim3" class="tab-content hidden space-y-6">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 backdrop-blur-sm">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-emerald-400">3. Sanoq Sistemasi va Koordinatalar</h2>
+                        <p class="text-slate-400 text-sm">Jismning vaqt bo'yicha koordinata o'qida o'zgarishini kuzating.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="sim3State.running = !sim3State.running" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition shadow-lg shadow-emerald-600/20">
+                            Ishga tushirish / To'xtatish
+                        </button>
+                        <button onclick="resetSim3()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded-xl text-sm font-medium transition">
+                            Noldan boshlash
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas container -->
+                <div class="relative w-full bg-slate-900 rounded-2xl border border-slate-700 overflow-hidden shadow-inner">
+                    <canvas id="canvasSim3" class="w-full h-80 block"></canvas>
+                    <div class="absolute bottom-4 left-4 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 px-4 py-2 rounded-xl text-xs flex gap-4">
+                        <div>O'q boshi ($0$): <span class="text-emerald-400 font-bold">Sanoq jism (Stansiya)</span></div>
+                        <div>Hozirgi Koordinata ($x$): <span id="sim3-coord" class="font-mono text-cyan-400">0</span> metr</div>
+                        <div>Sekundmer ($t$): <span id="sim3-time" class="font-mono text-indigo-400">0</span> s</div>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-slate-900/60 p-5 rounded-xl border border-slate-700/60 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div class="bg-slate-800/60 p-3 rounded-lg border border-slate-700">
+                        <span class="text-emerald-400 font-bold block mb-1">1. Sanoq jism</span>
+                        Harakat o'lchanadigan boshlang'ich nuqta (masalan, ustun yoki bino).
+                    </div>
+                    <div class="bg-slate-800/60 p-3 rounded-lg border border-slate-700">
+                        <span class="text-cyan-400 font-bold block mb-1">2. Koordinata o'qi</span>
+                        Masofani metr yoki kilometrlarda ko'rsatuvchi o'q.
+                    </div>
+                    <div class="bg-slate-800/60 p-3 rounded-lg border border-slate-700">
+                        <span class="text-indigo-400 font-bold block mb-1">3. Vaqtni o'lchash asbobi</span>
+                        Sekundmer yoki soat yordamida jarayonning davomiyligi qayd etiladi.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: QUIZ & INTERACTIVE TASKS -->
+        <section id="tab-quiz" class="tab-content hidden space-y-6">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 sm:p-8 backdrop-blur-sm max-w-3xl mx-auto">
+                <h2 class="text-2xl font-bold text-indigo-400 mb-2">🧠 Bilimingizni Sinab Ko'ring</h2>
+                <p class="text-slate-400 text-sm mb-6">Mavzu bo'yicha 3 ta interaktiv savolga javob bering va daromadingizni tekshiring.</p>
+
+                <div id="quiz-container" class="space-y-6">
+                    <!-- Quiz generated dynamically or statically -->
+                    <div id="question-box" class="bg-slate-900/80 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="flex justify-between text-xs text-slate-400">
+                            <span id="quiz-progress">1-savol / 3</span>
+                            <span class="text-indigo-400 font-medium">7-sinf Fizika</span>
+                        </div>
+                        <h3 id="quiz-question" class="text-lg font-semibold text-slate-100"></h3>
+                        <div id="quiz-options" class="grid grid-cols-1 gap-3">
+                            <!-- Options injected by JS -->
+                        </div>
+                    </div>
+
+                    <div id="quiz-feedback" class="hidden p-4 rounded-xl text-sm font-medium"></div>
+
+                    <div class="flex justify-end">
+                        <button id="next-quiz-btn" onclick="nextQuestion()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-xl text-sm font-medium transition shadow-lg shadow-indigo-600/30">
+                            Keyingi savol &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quiz-result" class="hidden text-center space-y-4 py-8">
+                    <div class="text-4xl">🎉</div>
+                    <h3 class="text-2xl font-bold text-emerald-400">Tabriklaymiz! Testni yakunladingiz.</h3>
+                    <p id="quiz-score-text" class="text-slate-300"></p>
+                    <button onclick="restartQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-xl text-sm font-medium transition shadow-lg">
+                        Qaytadan boshlash
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800/40 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
+        7-sinf fizika fani uchun maxsus interaktiv ta'lim platformasi &bull; O'zbekiston
+    </footer>
+
+    <!-- JavaScript Application Code -->
+    <script>
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
+                btn.classList.add('bg-slate-700/60', 'text-slate-300');
+            });
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const activeBtn = document.querySelector(`[data-tab="${tabId}"]`);
+            if(activeBtn) {
+                activeBtn.classList.remove('bg-slate-700/60', 'text-slate-300');
+                activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
+            }
+
+            // Resize canvases on tab switch
+            setTimeout(() => {
+                resizeCanvas('canvasSim1');
+                resizeCanvas('canvasSim2');
+                resizeCanvas('canvasSim3');
+            }, 50);
+        }
+
+        function resizeCanvas(id) {
+            const canvas = document.getElementById(id);
+            if (!canvas) return;
+            const parent = canvas.parentElement;
+            canvas.width = parent.clientWidth;
+            canvas.height = 320;
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas('canvasSim1');
+            resizeCanvas('canvasSim2');
+            resizeCanvas('canvasSim3');
+        });
+
+        // -------------------------------------------------------------
+        // SIMULATION 1: Mechanical Motion
+        // -------------------------------------------------------------
+        const canvas1 = document.getElementById('canvasSim1');
+        const ctx1 = canvas1 ? canvas1.getContext('2d') : null;
+        
+        let sim1State = {
+            running: true,
+            time: 0,
+            carX: 50,
+            speed: 40
+        };
+
+        function updateSim1Speed(val) {
+            sim1State.speed = parseInt(val);
+            document.getElementById('sim1-speed-val').innerText = val;
+        }
+
+        function resetSim1() {
+            sim1State.time = 0;
+            sim1State.carX = 50;
+        }
+
+        function drawSim1() {
+            if (!ctx1 || !canvas1) return;
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+
+            // Sky background gradient
+            const grad = ctx1.createLinearGradient(0, 0, 0, canvas1.height);
+            grad.addColorStop(0, '#0f172a');
+            grad.addColorStop(1, '#1e293b');
+            ctx1.fillStyle = grad;
+            ctx1.fillRect(0, 0, canvas1.width, canvas1.height);
+
+            // Road
+            ctx1.fillStyle = '#334155';
+            ctx1.fillRect(0, canvas1.height - 90, canvas1.width, 90);
+            
+            // Road dashed lines
+            ctx1.strokeStyle = '#94a3b8';
+            ctx1.lineWidth = 4;
+            ctx1.setLineDash([20, 15]);
+            ctx1.beginPath();
+            ctx1.moveTo(0, canvas1.height - 45);
+            ctx1.lineTo(canvas1.width, canvas1.height - 45);
+            ctx1.stroke();
+            ctx1.setLineDash([]);
+
+            // Static Tree (Sanoq jism)
+            drawTree(150, canvas1.height - 90);
+            drawHouse(canvas1.width - 200, canvas1.height - 90);
+
+            // Moving Car
+            drawCar(sim1State.carX, canvas1.height - 85);
+
+            // Update DOM stats
+            if (sim1State.running) {
+                sim1State.time += 0.03;
+                sim1State.carX += (sim1State.speed * 0.05);
+                if (sim1State.carX > canvas1.width + 100) {
+                    sim1State.carX = -100;
+                }
+            }
+
+            document.getElementById('sim1-time').innerText = sim1State.time.toFixed(1);
+            document.getElementById('sim1-pos').innerText = Math.floor(sim1State.carX);
+
+            requestAnimationFrame(drawSim1);
+        }
+
+        function drawTree(x, y) {
+            // Trunk
+            ctx1.fillStyle = '#78350f';
+            ctx1.fillRect(x - 6, y - 50, 12, 50);
+            // Foliage
+            ctx1.fillStyle = '#15803d';
+            ctx1.beginPath();
+            ctx1.arc(x, y - 60, 25, 0, Math.PI * 2);
+            ctx1.fill();
+        }
+
+        function drawHouse(x, y) {
+            // Walls
+            ctx1.fillStyle = '#475569';
+            ctx1.fillRect(x, y - 60, 70, 60);
+            // Roof
+            ctx1.fillStyle = '#991b1b';
+            ctx1.beginPath();
+            ctx1.moveTo(x - 10, y - 60);
+            ctx1.lineTo(x + 35, y - 95);
+            ctx1.lineTo(x + 80, y - 60);
+            ctx1.closePath();
+            ctx1.fill();
+        }
+
+        function drawCar(x, y) {
+            // Body
+            ctx1.fillStyle = '#6366f1';
+            ctx1.fillRect(x, y - 35, 75, 25);
+            // Top cabin
+            ctx1.fillStyle = '#818cf8';
+            ctx1.fillRect(x + 15, y - 55, 45, 20);
+            // Wheels
+            ctx1.fillStyle = '#0f172a';
+            ctx1.beginPath();
+            ctx1.arc(x + 20, y - 10, 10, 0, Math.PI * 2);
+            ctx1.arc(x + 55, y - 10, 10, 0, Math.PI * 2);
+            ctx1.fill();
+        }
+
+        // -------------------------------------------------------------
+        // SIMULATION 2: Relative Motion
+        // -------------------------------------------------------------
+        const canvas2 = document.getElementById('canvasSim2');
+        const ctx2 = canvas2 ? canvas2.getContext('2d') : null;
+
+        let sim2State = {
+            running: true,
+            ref: 'road', // 'road' or 'bus'
+            busX: 100,
+            roadOffset: 0
+        };
+
+        function setReferenceFrame(ref) {
+            sim2State.ref = ref;
+            document.querySelectorAll('.ref-btn').forEach(b => {
+                b.classList.remove('bg-cyan-600', 'text-white');
+                b.classList.add('bg-slate-700', 'text-slate-300');
+            });
+            document.getElementById('ref-' + ref).classList.remove('bg-slate-700', 'text-slate-300');
+            document.getElementById('ref-' + ref).classList.add('bg-cyan-600', 'text-white');
+
+            if (ref === 'road') {
+                document.getElementById('ref-name').innerText = "Bekatdagi odam";
+                document.getElementById('passenger-rel-status').innerText = "Harakatda (v = 60 m/s)";
+                document.getElementById('sim2-explanation').innerHTML = "Agar siz <strong>bekatdagi odam</strong> bo'lsangiz, avtobus va uning ichidagi yo'lovchi yuqori tezlikda o'tib ketayotganini ko'rasiz.";
+            } else {
+                document.getElementById('ref-name').innerText = "Avtobusdagi yo'lovchi";
+                document.getElementById('passenger-rel-status').innerText = "Tinch holatda (v = 0 m/s)";
+                document.getElementById('sim2-explanation').innerHTML = "Agar siz <strong>avtobus ichidagi yo'lovchi</strong> bo'lsangiz, o'zingizga nisbatan yonboshdagi o'rindiq ham, boshqa yo'lovchi ham tinch turibdi deb hisoblaysiz.";
+            }
+        }
+
+        function drawSim2() {
+            if (!ctx2 || !canvas2) return;
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+            // Background
+            ctx2.fillStyle = '#0f172a';
+            ctx2.fillRect(0, 0, canvas2.width, canvas2.height);
+
+            // Road & Environment
+            ctx2.fillStyle = '#334155';
+            ctx2.fillRect(0, canvas2.height - 80, canvas2.width, 80);
+
+            // Draw roadside poles moving depending on ref frame
+            let renderBusX = sim2State.busX;
+            if (sim2State.ref === 'bus') {
+                // Keep bus centered, move background scenery
+                renderBusX = canvas2.width / 2 - 60;
+                if (sim2State.running) {
+                    sim2State.roadOffset -= 3;
+                    if (sim2State.roadOffset < -50) sim2State.roadOffset = 0;
+                }
+            } else {
+                if (sim2State.running) {
+                    sim2State.busX += 3;
+                    if (sim2State.busX > canvas2.width + 100) sim2State.busX = -150;
+                }
+                renderBusX = sim2State.busX;
+            }
+
+            // Draw roadside markers (trees / streetlights)
+            ctx2.fillStyle = '#f59e0b';
+            for (let i = -1; i < 5; i++) {
+                let poleX = (i * 150) + (sim2State.ref === 'bus' ? sim2State.roadOffset : 0);
+                if (sim2State.ref === 'road') poleX = (i * 150); // fixed
+                ctx2.fillRect(poleX % (canvas2.width + 100), canvas2.height - 120, 6, 40);
+            }
+
+            // Draw Bus
+            ctx2.fillStyle = '#0ea5e9';
+            ctx2.fillRect(renderBusX, canvas2.height - 110, 140, 65);
+            // Windows
+            ctx2.fillStyle = '#bae6fd';
+            ctx2.fillRect(renderBusX + 15, canvas2.height - 95, 30, 25);
+            ctx2.fillRect(renderBusX + 55, canvas2.height - 95, 30, 25);
+            ctx2.fillRect(renderBusX + 95, canvas2.height - 95, 30, 25);
+            // Wheels
+            ctx2.fillStyle = '#0f172a';
+            ctx2.beginPath();
+            ctx2.arc(renderBusX + 35, canvas2.height - 40, 12, 0, Math.PI * 2);
+            ctx2.arc(renderBusX + 105, canvas2.height - 40, 12, 0, Math.PI * 2);
+            ctx2.fill();
+
+            // Draw Passenger inside bus
+            ctx2.fillStyle = '#f43f5e';
+            ctx2.beginPath();
+            ctx2.arc(renderBusX + 70, canvas2.height - 85, 7, 0, Math.PI * 2);
+            ctx2.fill();
+
+            // Draw Roadside Observer
+            if (sim2State.ref === 'road') {
+                ctx2.fillStyle = '#10b981';
+                ctx2.fillRect(80, canvas2.height - 100, 12, 35);
+                ctx2.beginPath();
+                ctx2.arc(86, canvas2.height - 110, 6, 0, Math.PI * 2);
+                ctx2.fill();
+            }
+
+            requestAnimationFrame(drawSim2);
+        }
+
+        // -------------------------------------------------------------
+        // SIMULATION 3: Coordinate System
+        // -------------------------------------------------------------
+        const canvas3 = document.getElementById('canvasSim3');
+        const ctx3 = canvas3 ? canvas3.getContext('2d') : null;
+
+        let sim3State = {
+            running: true,
+            time: 0,
+            pos: 0
+        };
+
+        function resetSim3() {
+            sim3State.time = 0;
+            sim3State.pos = 0;
+        }
+
+        function drawSim3() {
+            if (!ctx3 || !canvas3) return;
+            ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
+
+            // Background
+            ctx3.fillStyle = '#0f172a';
+            ctx3.fillRect(0, 0, canvas3.width, canvas3.height);
+
+            let originX = 60;
+            let scale = 3; // pixels per meter
+
+            if (sim3State.running) {
+                sim3State.time += 0.03;
+                sim3State.pos += 0.8;
+                if (sim3State.pos > (canvas3.width - 120) / scale) {
+                    sim3State.pos = 0;
+                }
+            }
+
+            // Draw Axis line
+            ctx3.strokeStyle = '#10b981';
+            ctx3.lineWidth = 3;
+            ctx3.beginPath();
+            ctx3.moveTo(originX - 20, canvas3.height / 2);
+            ctx3.lineTo(canvas3.width - 40, canvas3.height / 2);
+            ctx3.stroke();
+
+            // Arrow head
+            ctx3.fillStyle = '#10b981';
+            ctx3.beginPath();
+            ctx3.moveTo(canvas3.width - 40, canvas3.height / 2 - 6);
+            ctx3.lineTo(canvas3.width - 25, canvas3.height / 2);
+            ctx3.lineTo(canvas3.width - 40, canvas3.height / 2 + 6);
+            ctx3.fill();
+
+            // Draw coordinate notches
+            ctx3.fillStyle = '#94a3b8';
+            ctx3.font = '10px Inter';
+            for (let m = 0; m <= 250; m += 20) {
+                let px = originX + (m * scale);
+                if (px > canvas3.width - 60) break;
+                ctx3.fillRect(px, canvas3.height / 2 - 5, 2, 10);
+                ctx3.fillText(m + "m", px - 8, canvas3.height / 2 + 22);
+            }
+
+            // Origin marker (Sanoq jism)
+            ctx3.fillStyle = '#f59e0b';
+            ctx3.fillRect(originX - 10, canvas3.height / 2 - 35, 20, 35);
+            ctx3.fillStyle = '#fde68a';
+            ctx3.font = 'bold 11px Inter';
+            ctx3.fillText("Boshlang'ich jism (0)", originX - 45, canvas3.height / 2 - 45);
+
+            // Moving Object on coordinate axis
+            let objPx = originX + (sim3State.pos * scale);
+            ctx3.fillStyle = '#6366f1';
+            ctx3.beginPath();
+            ctx3.arc(objPx, canvas3.height / 2, 12, 0, Math.PI * 2);
+            ctx3.fill();
+            ctx3.fillStyle = '#ffffff';
+            ctx3.font = 'bold 10px Inter';
+            ctx3.fillText("Jism", objPx - 10, canvas3.height / 2 - 18);
+
+            // Update DOM
+            document.getElementById('sim3-coord').innerText = Math.floor(sim3State.pos);
+            document.getElementById('sim3-time').innerText = sim3State.time.toFixed(1);
+
+            requestAnimationFrame(drawSim3);
+        }
+
+        // -------------------------------------------------------------
+        // QUIZ DATA & LOGIC
+        // -------------------------------------------------------------
+        const quizData = [
+            {
+                question: "Vaqt o'tishi bilan jismning boshqa jismlarga nisbatan fazodagi holatining o'zgarishi nima deb ataladi?",
+                options: [
+                    "Mexanik harakat",
+                    "Tinch holat",
+                    "Traektoriya",
+                    "Sanoq sistemasi"
+                ],
+                answer: 0
+            },
+            {
+                question: "Harakatlanayotgan poyezd ichida o'tirgan yo'lovchi yonidagi yo'lovchiga nisbatan qanday holatda bo'ladi?",
+                options: [
+                    "Harakatda",
+                    "Tinch holatda",
+                    "Tezlanuvchan harakatda",
+                    "Noma'lum"
+                ],
+                answer: 1
+            },
+            {
+                question: "Sanoq sistemasiga quyidagilardan qaysi biri kirmaydi?",
+                options: [
+                    "Sanoq jism",
+                    "Koordinatalar sistemasi",
+                    "Vaqtni o'lchaydigan asbob (soat)",
+                    "Elektr quvvati manbai"
+                ],
+                answer: 3
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            if (currentQuizIndex >= quizData.length) {
+                document.getElementById('quiz-container').classList.add('hidden');
+                document.getElementById('quiz-result').classList.remove('hidden');
+                document.getElementById('quiz-score-text').innerText = `Siz 3 ta savoldan ${score} tasiga to'g'ri javob berdingiz!`;
+                return;
+            }
+
+            const q = quizData[currentQuizIndex];
+            document.getElementById('quiz-progress').innerText = `${currentQuizIndex + 1}-savol / ${quizData.length}`;
+            document.getElementById('quiz-question').innerText = q.question;
+            
+            const optionsBox = document.getElementById('quiz-options');
+            optionsBox.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left bg-slate-800 hover:bg-slate-700/80 border border-slate-700 p-3.5 rounded-xl text-sm font-medium transition flex items-center justify-between";
+                btn.innerHTML = `<span>${opt}</span> <span class="text-xs text-slate-500">Tanlash</span>`;
+                btn.onclick = () => selectAnswer(idx, btn);
+                optionsBox.appendChild(btn);
+            });
+
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('next-quiz-btn').classList.add('hidden');
+        }
+
+        function selectAnswer(selectedIdx, btnElement) {
+            const q = quizData[currentQuizIndex];
+            const allBtns = document.getElementById('quiz-options').querySelectorAll('button');
+            
+            // Disable all options
+            allBtns.forEach(b => b.disabled = true);
+
+            const feedbackBox = document.getElementById('quiz-feedback');
+            feedbackBox.classList.remove('hidden');
+
+            if (selectedIdx === q.answer) {
+                btnElement.classList.remove('bg-slate-800');
+                btnElement.classList.add('bg-emerald-900/50', 'border-emerald-600', 'text-emerald-200');
+                feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-emerald-950/60 border border-emerald-800 text-emerald-300";
+                feedbackBox.innerText = "✅ To'g'ri! Barakalla!";
+                score++;
+            } else {
+                btnElement.classList.remove('bg-slate-800');
+                btnElement.classList.add('bg-rose-900/50', 'border-rose-600', 'text-rose-200');
+                // Highlight correct
+                allBtns[q.answer].classList.remove('bg-slate-800');
+                allBtns[q.answer].classList.add('bg-emerald-900/50', 'border-emerald-600', 'text-emerald-200');
+                
+                feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-rose-950/60 border border-rose-800 text-rose-300";
+                feedbackBox.innerText = "❌ Noto'g'ri. To'g'ri javob yashil rangda belgilandi.";
+            }
+
+            document.getElementById('next-quiz-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuizIndex++;
+            loadQuiz();
+        }
+
+        function restartQuiz() {
+            currentQuizIndex = 0;
+            score = 0;
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+            loadQuiz();
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            resizeCanvas('canvasSim1');
+            resizeCanvas('canvasSim2');
+            resizeCanvas('canvasSim3');
+
+            requestAnimationFrame(drawSim1);
+            requestAnimationFrame(drawSim2);
+            requestAnimationFrame(drawSim3);
+
+            loadQuiz();
+        };
+    </script>
+</body>
+</html>
