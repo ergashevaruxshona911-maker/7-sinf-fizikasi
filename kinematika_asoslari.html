@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinematikaning asosiy tushunchalari - 7-sinf Fizika</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .canvas-container { position: relative; width: 100%; height: 350px; background: #0f172a; border-radius: 1rem; overflow: hidden; }
+        canvas { display: block; width: 100%; height: 100%; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <header class="bg-slate-800/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-600 p-2.5 rounded-xl text-white shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-atom text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">7-Sinf Fizika: Kinematika</h1>
+                    <p class="text-xs text-slate-400">Muallim va Dasturiy ta'minot muhiti</p>
+                </div>
+            </div>
+            <nav class="flex gap-2 text-sm font-medium overflow-x-auto max-w-full pb-1 sm:pb-0">
+                <a href="#kirish" class="px-3 py-1.5 rounded-lg bg-slate-700/60 hover:bg-indigo-600 transition">Asoslar</a>
+                <a href="#reja1" class="px-3 py-1.5 rounded-lg bg-slate-700/60 hover:bg-indigo-600 transition">1. Moddiy nuqta</a>
+                <a href="#reja2" class="px-3 py-1.5 rounded-lg bg-slate-700/60 hover:bg-indigo-600 transition">2. Yo'l va ko'chish</a>
+                <a href="#reja3" class="px-3 py-1.5 rounded-lg bg-slate-700/60 hover:bg-indigo-600 transition">3. Ilgarilanma</a>
+                <a href="#testlar" class="px-3 py-1.5 rounded-lg bg-slate-700/60 hover:bg-indigo-600 transition">Testlar</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-16 flex-grow w-full">
+        <section id="kirish" class="text-center space-y-4 py-8 bg-gradient-to-b from-indigo-950/40 to-transparent p-8 rounded-3xl border border-indigo-500/20 shadow-2xl">
+            <span class="inline-block px-3.5 py-1 text-xs font-semibold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 rounded-full border border-indigo-500/30">Dars Ishlanmasi va Qo'llanma</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight">Kinematikaning asosiy tushunchalari</h2>
+            <p class="text-slate-300 max-w-2xl mx-auto text-base sm:text-lg">Mexanika fanining jismlarning mexanik harakatini o'rganuvchi bo'limi — kinematika olamiga xush kelibsiz! Ushbu darsda moddiy nuqta, traektoriya, yo'l, ko'chish va ilgarilanma harakatni interaktiv simulyatsiyalar orqali o'rganamiz.</p>
+        </section>
+
+        <section id="reja1" class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-600 text-white font-bold text-lg shadow-md">1</span>
+                <div>
+                    <h3 class="text-xl sm:text-2xl font-bold">Moddiy nuqta</h3>
+                    <p class="text-sm text-indigo-400">Berilgan sharoitda o'lchamlarini e'tiborsiz qoldirish mumkin bo'lgan jism</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+                    <p>Kundalik hayotda jismlarning o'lchamlari harakat masofasiga nisbatan juda kichik bo'lsa, ularning shakli va o'lchamlarini hisobga olmasdan, ularni shunchaki massaga ega bo'lgan bitta nuqta deb qarashimiz mumkin.</p>
+                    <ul class="space-y-2 list-disc pl-5 text-slate-300">
+                        <li><strong class="text-indigo-300">Misol 1:</strong> Toshkentdan Samarqandga ketayotgan avtobus o'lchami 10 metr, lekin masofa 300 kilometr. Demak, avtobusni moddiy nuqta deb olishimiz mumkin.</li>
+                        <li><strong class="text-indigo-300">Misol 2:</strong> Yerning Quyosh atrofida aylanishida Yerning o'lchamlari orbitasiga nisbatan juda kichik.</li>
+                    </ul>
+                </div>
+                <!-- Canvas simulation for Material Point -->
+                <div class="space-y-3">
+                    <div class="canvas-container shadow-inner border border-slate-700">
+                        <canvas id="sim1Canvas"></canvas>
+                    </div>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button onclick="toggleSim1Mode()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-xs sm:text-sm font-semibold transition shadow-lg shadow-indigo-600/30 flex items-center gap-2">
+                            <i class="fa-solid fa-arrows-split-up-and-left"></i> Rejimni almashtirish (Avtobus / Nuqta)
+                        </button>
+                        <button onclick="resetSim1()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-xl text-xs sm:text-sm font-semibold transition">
+                            <i class="fa-solid fa-rotate-right"></i> Qayta boshlash
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reja2" class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-600 text-white font-bold text-lg shadow-md">2</span>
+                <div>
+                    <h3 class="text-xl sm:text-2xl font-bold">Traektoriya, Yo'l va Ko'chish</h3>
+                    <p class="text-sm text-indigo-400">Skalyar va vektor kattaliklar farqi</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <!-- Canvas simulation for Path vs Displacement -->
+                <div class="space-y-3 order-2 md:order-1">
+                    <div class="canvas-container shadow-inner border border-slate-700">
+                        <canvas id="sim2Canvas"></canvas>
+                    </div>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button onclick="startSim2()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-xs sm:text-sm font-semibold transition shadow-lg shadow-indigo-600/30">
+                            <i class="fa-solid fa-play"></i> Harakatni boshlash
+                        </button>
+                        <button onclick="resetSim2()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-xl text-xs sm:text-sm font-semibold transition">
+                            <i class="fa-solid fa-rotate-right"></i> Tozalash
+                        </button>
+                    </div>
+                </div>
+                <div class="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed order-1 md:order-2">
+                    <p><strong class="text-slate-100">Traektoriya:</strong> Jism harakatlanganda qoldiradigan izi yoki chizig'i (egri yoki to'g'ri chiziqli bo'lishi mumkin).</p>
+                    <p><strong class="text-slate-100">Yo'l ($l$):</strong> Jism bosib o'tgan traektoriyaning uzunligi. U skalyar kattalik bo'lib, yo'nalishga ega emas.</p>
+                    <p><strong class="text-slate-100">Ko'chish ($\vec{s}$):</strong> Boshlang'ich nuqtani oxirgi nuqta bilan tutashtiruvchi yo'naltirilgan to'g'ri chizig'i (vektor).</p>
+                    <div class="p-3 bg-slate-900/80 rounded-xl border border-indigo-500/30 text-xs sm:text-sm text-indigo-200">
+                        <i class="fa-solid fa-circle-info text-indigo-400 mr-1.5"></i> Simulyatsiyada ko'k chiziq — <strong>Yo'l</strong>, sariq o'q — <strong>Ko'chish vektori</strong>ni ko'rsatadi!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reja3" class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-600 text-white font-bold text-lg shadow-md">3</span>
+                <div>
+                    <h3 class="text-xl sm:text-2xl font-bold">Mexanik va Ilgarilanma Harakat</h3>
+                    <p class="text-sm text-indigo-400">Ilgarilanma harakatning asosiy xossasi</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+                    <p><strong class="text-slate-100">Mexanik harakat:</strong> Jism vaziyatining vaqt o'tishi bilan boshqa jismlarga nisbatan o'zgarishi.</p>
+                    <p><strong class="text-slate-100">Ilgarilanma harakat:</strong> Jismning istalgan to'g'ri chizig'i o'z-o'ziga parallel ravishda ko'chib boradigan harakat turidir.</p>
+                    <p class="p-3 bg-indigo-950/40 rounded-xl border border-indigo-500/20 text-indigo-300">
+                        <i class="fa-solid fa-lightbulb text-amber-400 mr-1.5"></i> <strong>Asosiy xossa:</strong> Ilgarilanma harakatlanayotgan jismning barcha nuqtalari bir xil traektoriya chizadi va bir xil tezlikka ega bo'ladi! (Masalan: tebranma qavatli lift kabinasi, sirpanib borayotgan quti).
+                    </p>
+                </div>
+                <!-- Canvas simulation for Translational Motion -->
+                <div class="space-y-3">
+                    <div class="canvas-container shadow-inner border border-slate-700">
+                        <canvas id="sim3Canvas"></canvas>
+                    </div>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button onclick="toggleSim3()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-xs sm:text-sm font-semibold transition shadow-lg shadow-indigo-600/30">
+                            <i class="fa-solid fa-play"></i> Harakatni yoqish / To'xtatish
+                        </button>
+                        <button onclick="resetSim3()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-xl text-xs sm:text-sm font-semibold transition">
+                            <i class="fa-solid fa-rotate-right"></i> Qayta tiklash
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testlar" class="bg-gradient-to-br from-slate-800 to-indigo-950/60 border border-slate-700 rounded-3xl p-6 sm:p-10 space-y-8 shadow-2xl">
+            <div class="text-center space-y-2">
+                <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 text-xs font-semibold rounded-full border border-indigo-500/30">O'z-o'zini baholash</span>
+                <h3 class="text-2xl sm:text-3xl font-extrabold">Bilimingizni sinab ko'ring</h3>
+                <p class="text-slate-400 text-sm">Mavzu bo'yicha egallagan bilimlaringizni tekshirish uchun 3 ta savolga javob bering.</p>
+            </div>
+
+            <div class="space-y-6 max-w-3xl mx-auto">
+                <!-- Question 1 -->
+                <div class="bg-slate-900/70 p-5 sm:p-6 rounded-2xl border border-slate-700 space-y-4 shadow-lg">
+                    <h4 class="font-semibold text-base sm:text-lg text-slate-100">1. Qaysi holatda avtomobilni moddiy nuqta deb olishimiz to'g'ri bo'ladi?</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm" id="q1-options">
+                        <button onclick="checkAnswer(1, 0, false)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q1-btn">A) Avtomobil garajga kirib to'xtayotganda</button>
+                        <button onclick="checkAnswer(1, 1, true)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q1-btn">B) Toshkentdan Farg'ogacha harakatlanayotganda</button>
+                        <button onclick="checkAnswer(1, 2, false)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q1-btn">C) Avtomobilni yuvish shoxobchasida tozalashganda</button>
+                        <button onclick="checkAnswer(1, 3, false)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q1-btn">D) Svetofor chirog'ida turganida</button>
+                    </div>
+                    <div id="q1-feedback" class="hidden text-sm font-medium p-3 rounded-xl"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="bg-slate-900/70 p-5 sm:p-6 rounded-2xl border border-slate-700 space-y-4 shadow-lg">
+                    <h4 class="font-semibold text-base sm:text-lg text-slate-100">2. Yo'l va ko'chish haqidagi qaysi tasdiq to'g'ri?</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm" id="q2-options">
+                        <button onclick="checkAnswer(2, 0, false)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q2-btn">A) Yo'l vektor kattalik, ko'chish skalyar</button>
+                        <button onclick="checkAnswer(2, 1, true)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q2-btn">B) Yo'l skalyar kattalik, ko'chish esa vektor kattalik</button>
+                        <button onclick="checkAnswer(2, 2, false)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q2-btn">C) Ikkalasi ham doimo bir xil qiymatga ega</button>
+                        <button onclick="checkAnswer(2, 3, false)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q2-btn">D) Ko'chish traektoriyaning uzunligiga teng</button>
+                    </div>
+                    <div id="q2-feedback" class="hidden text-sm font-medium p-3 rounded-xl"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="bg-slate-900/70 p-5 sm:p-6 rounded-2xl border border-slate-700 space-y-4 shadow-lg">
+                    <h4 class="font-semibold text-base sm:text-lg text-slate-100">3. Ilgarilanma harakatlanayotgan jism barcha nuqtalarining traektoriyalari qanday bo'ladi?</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm" id="q3-options">
+                        <button onclick="checkAnswer(3, 0, false)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q3-btn">A) Har xil shaklga ega bo'ladi</button>
+                        <button onclick="checkAnswer(3, 1, false)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q3-btn">B) Faqat aylanma chiziqlar bo'ladi</button>
+                        <button onclick="checkAnswer(3, 2, true)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q3-btn">C) O'zaro bir xil (parallel ko'chgan) bo'ladi</button>
+                        <button onclick="checkAnswer(3, 3, false)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition q3-btn">D) Nuqtalar harakatlanmaydi</button>
+                    </div>
+                    <div id="q3-feedback" class="hidden text-sm font-medium p-3 rounded-xl"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 border-t border-slate-700 py-6 mt-16 text-center text-xs sm:text-sm text-slate-400">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>7-sinf Fizika fani o'quv qo'llanma va interaktiv simulyatsiyalar muhiti &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        // Setup canvases responsively
+        function setupCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+            return { canvas, ctx, width: rect.width, height: rect.height };
+        }
+
+        // --- SIMULATION 1: Material Point ---
+        let sim1ModeBus = true; // true = bus view, false = point view
+        let busX = 50;
+        function toggleSim1Mode() {
+            sim1ModeBus = !sim1ModeBus;
+        }
+        function resetSim1() {
+            busX = 50;
+        }
+        function runSim1() {
+            const { ctx, width, height } = setupCanvas('sim1Canvas');
+            
+            // Animation update
+            busX += 1.2;
+            if (busX > width + 100) busX = -100;
+
+            // Draw background
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, width, height);
+
+            // Road
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(0, height / 2 + 30);
+            ctx.lineTo(width, height / 2 + 30);
+            ctx.stroke();
+
+            // Dashed center road line
+            ctx.strokeStyle = '#64748b';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 10]);
+            ctx.beginPath();
+            ctx.moveTo(0, height / 2 + 30);
+            ctx.lineTo(width, height / 2 + 30);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            if (sim1ModeBus) {
+                // Draw Bus
+                ctx.fillStyle = '#6366f1';
+                ctx.roundRect(busX, height / 2 - 10, 80, 40, 8);
+                ctx.fill();
+                // Wheels
+                ctx.fillStyle = '#0f172a';
+                ctx.beginPath();
+                ctx.arc(busX + 20, height / 2 + 30, 8, 0, Math.PI * 2);
+                ctx.arc(busX + 60, height / 2 + 30, 8, 0, Math.PI * 2);
+                ctx.fill();
+                // Windows
+                ctx.fillStyle = '#cbd5e1';
+                ctx.fillRect(busX + 10, height / 2, 15, 15);
+                ctx.fillRect(busX + 35, height / 2, 15, 15);
+                ctx.fillRect(busX + 60, height / 2, 12, 15);
+
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '12px Inter, sans-serif';
+                ctx.fillText("Haqiqiy jism (Avtobus o'lchamlari mavjud)", 20, 30);
+            } else {
+                // Draw Material Point
+                ctx.fillStyle = '#38bdf8';
+                ctx.beginPath();
+                ctx.arc(busX + 40, height / 2 + 10, 8, 0, Math.PI * 2);
+                ctx.shadowColor = '#38bdf8';
+                ctx.shadowBlur = 15;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                ctx.fillStyle = '#38bdf8';
+                ctx.font = '12px Inter, sans-serif';
+                ctx.fillText("Moddiy nuqta (O'lchamlari e'tiborsiz qoldirildi)", 20, 30);
+            }
+        }
+
+        // --- SIMULATION 2: Path vs Displacement ---
+        let sim2Progress = 0;
+        let sim2Running = false;
+        const startX = 60, startY = 250;
+        const endX = 320, endY = 80;
+
+        function startSim2() {
+            sim2Running = true;
+        }
+        function resetSim2() {
+            sim2Progress = 0;
+            sim2Running = false;
+        }
+
+        function runSim2() {
+            const { ctx, width, height } = setupCanvas('sim2Canvas');
+            
+            if (sim2Running && sim2Progress < 1) {
+                sim2Progress += 0.01;
+                if (sim2Progress > 1) sim2Progress = 1;
+            }
+
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw curved path trajectory
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.bezierCurveTo(startX + 100, startY - 150, startX + 150, startY + 50, endX, endY);
+            ctx.stroke();
+
+            // Draw straight displacement vector
+            if (sim2Progress > 0) {
+                ctx.strokeStyle = '#fbbf24';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                // current interpolated position or final
+                let currX = startX + (endX - startX) * sim2Progress;
+                let currY = startY + (endY - startY) * sim2Progress;
+                // For simplified straight line vector preview during motion
+                ctx.lineTo(currX, currY);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Draw moving particle
+                ctx.fillStyle = '#f43f5e';
+                ctx.beginPath();
+                ctx.arc(currX, currY, 7, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Start and End points labels
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = '12px Inter, sans-serif';
+            ctx.fillText("A (Boshlang'ich)", startX - 20, startY + 20);
+            ctx.fillText("B (Oxirgi)", endX - 20, endY - 15);
+
+            // Legend
+            ctx.fillStyle = '#3b82f6';
+            ctx.fillRect(20, 20, 15, 4);
+            ctx.fillStyle = '#cbd5e1';
+            ctx.fillText("Yo'l (Traektoriya uzunligi)", 40, 24);
+
+            ctx.fillStyle = '#fbbf24';
+            ctx.fillRect(20, 40, 15, 4);
+            ctx.fillStyle = '#cbd5e1';
+            ctx.fillText("Ko'chish (Vektor)", 40, 44);
+        }
+
+        // --- SIMULATION 3: Translational Motion ---
+        let sim3Active = false;
+        let boxOffset = 0;
+
+        function toggleSim3() {
+            sim3Active = !sim3Active;
+        }
+        function resetSim3() {
+            sim3Active = false;
+            boxOffset = 0;
+        }
+
+        function runSim3() {
+            const { ctx, width, height } = setupCanvas('sim3Canvas');
+
+            if (sim3Active) {
+                boxOffset += 1.5;
+                if (boxOffset > width - 150) boxOffset = 0;
+            }
+
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw parallel tracks for points
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.moveTo(40, height / 2 - 40); ctx.lineTo(width - 40, height / 2 - 40);
+            ctx.moveTo(40, height / 2 + 40); ctx.lineTo(width - 40, height / 2 + 40);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Moving Box (Translational motion)
+            let boxX = 60 + boxOffset;
+            let boxY = height / 2 - 30;
+
+            ctx.fillStyle = '#4f46e5';
+            ctx.roundRect(boxX, boxY, 80, 60, 10);
+            ctx.fill();
+
+            // Highlight 4 corners (points) of the box to show identical trajectories
+            const points = [
+                { x: boxX, y: boxY },               // Top-Left
+                { x: boxX + 80, y: boxY },          // Top-Right
+                { x: boxX, y: boxY + 60 },          // Bottom-Left
+                { x: boxX + 80, y: boxY + 60 }      // Bottom-Right
+            ];
+
+            points.forEach((p, index) => {
+                ctx.fillStyle = '#38bdf8';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = '12px Inter, sans-serif';
+            ctx.fillText("Barcha nuqtalar bir xil parallel traektoriya chizadi", 20, 30);
+        }
+
+        // --- Quiz Checker ---
+        function checkAnswer(questionNum, selectedIndex, isCorrect) {
+            const options = document.querySelectorAll(`.q${questionNum}-btn`);
+            const feedback = document.getElementById(`q${questionNum}-feedback`);
+
+            options.forEach((btn, idx) => {
+                btn.classList.remove('bg-emerald-600', 'bg-rose-600', 'border-emerald-400', 'border-rose-400');
+                if (idx === selectedIndex) {
+                    if (isCorrect) {
+                        btn.classList.add('bg-emerald-600', 'border-emerald-400');
+                    } else {
+                        btn.classList.add('bg-rose-600', 'border-rose-400');
+                    }
+                }
+            });
+
+            feedback.classList.remove('hidden');
+            if (isCorrect) {
+                feedback.className = "text-sm font-medium p-3 rounded-xl bg-emerald-950/80 text-emerald-300 border border-emerald-500/30";
+                feedback.innerHTML = `<i class="fa-solid fa-check mr-2"></i> To'g'ri! Barakalla.`;
+            } else {
+                feedback.className = "text-sm font-medium p-3 rounded-xl bg-rose-950/80 text-rose-300 border border-rose-500/30";
+                feedback.innerHTML = `<i class="fa-solid fa-xmark mr-2"></i> Noto'g'ri. Qayta urinib ko'ring!`;
+            }
+        }
+
+        // Unified animation loop
+        function mainLoop() {
+            runSim1();
+            runSim2();
+            runSim3();
+            requestAnimationFrame(mainLoop);
+        }
+
+        window.onload = function() {
+            requestAnimationFrame(mainLoop);
+        };
+    </script>
+</body>
+</html>
