@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-Sinf Fizika: Fazo va Vaqt</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        canvas {
+            touch-action: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-violet-600 to-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold bg-gradient-to-r from-violet-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">Fizika olami: 7-sinf</h1>
+                    <p class="text-xs text-slate-400">2-mavzu: Fazo va Vaqt</p>
+                </div>
+            </div>
+            <!-- Navigation Tabs -->
+            <nav class="flex flex-wrap gap-2 justify-center" id="nav-tabs">
+                <button onclick="switchTab('theory')" data-tab="theory" class="tab-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-indigo-600 text-white shadow-lg shadow-indigo-600/30">Dars Rejasi</button>
+                <button onclick="switchTab('space')" data-tab="space" class="tab-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-slate-800/80 text-slate-300 hover:bg-slate-800">1. Fazoning Cheksizligi</button>
+                <button onclick="switchTab('coords')" data-tab="coords" class="tab-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-slate-800/80 text-slate-300 hover:bg-slate-800">2. Uch O'lchamli Fazo (3D)</button>
+                <button onclick="switchTab('time')" data-tab="time" class="tab-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-slate-800/80 text-slate-300 hover:bg-slate-800">3. Vaqt O'qi</button>
+                <button onclick="switchTab('quiz')" data-tab="quiz" class="tab-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-slate-800/80 text-slate-300 hover:bg-slate-800">Test & Savollar</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl mx-auto w-full p-4 sm:p-6">
+
+        <!-- TAB 1: THEORY -->
+        <section id="tab-theory" class="tab-content space-y-6">
+            <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
+                <h2 class="text-2xl font-bold text-indigo-400 mb-4">🌌 2-Mavzu: Fazo va Vaqt</h2>
+                <p class="text-slate-300 mb-6 leading-relaxed">
+                    Fizika ilmida har qanday jism ma'lum fazoda joylashadi va ma'lum vaqt oralig'ida o'z harakatini amalga oshiradi. Bugun biz koinotning cheksizligi, fazoning uch o'lchami ($X, Y, Z$) va vaqtning bir o'lchamli oqimini o'rganamiz.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-slate-950/60 border border-slate-800/70 p-5 rounded-xl shadow-md">
+                        <div class="text-violet-400 font-bold text-lg mb-2 flex items-center gap-2">
+                            <span class="bg-violet-500/20 px-2.5 py-1 rounded-lg text-sm">1</span> Fazoning cheksizligi
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Koinot milliardlab galaktikalardan, yulduzlar tizimlaridan tashkil topgan bo'lib, uning chegarasi yo'q — u cheksiz kengayib bormoqda.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-950/60 border border-slate-800/70 p-5 rounded-xl shadow-md">
+                        <div class="text-indigo-400 font-bold text-lg mb-2 flex items-center gap-2">
+                            <span class="bg-indigo-500/20 px-2.5 py-1 rounded-lg text-sm">2</span> Uch o'lchamli koordinatalar
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Fazodagi har qanday jismning o'rnini aniqlash uchun uchta o'lcham — eni ($X$), bo'yi ($Y$) va balandligi ($Z$) ko'rsatiladi.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-950/60 border border-slate-800/70 p-5 rounded-xl shadow-md">
+                        <div class="text-cyan-400 font-bold text-lg mb-2 flex items-center gap-2">
+                            <span class="bg-cyan-500/20 px-2.5 py-1 rounded-lg text-sm">3</span> Vaqt o'qi
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Vaqt bir o'lchamli bo'lib, u faqat o'tmishdan kelajakka qarab bir yo'nalishda tinimsiz oqib boradi. Uni orqaga qaytarib bo'lmaydi.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-gradient-to-r from-violet-950/40 to-indigo-950/40 border border-indigo-800/40 rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <h4 class="font-semibold text-indigo-300">Simulyatsiyalarni sinab ko'rishga tayyormisiz?</h4>
+                        <p class="text-sm text-slate-400">Koinot masshtablari va 3D fazo bo'ylab sayohatni boshlaymiz!</p>
+                    </div>
+                    <button onclick="switchTab('space')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-indigo-600/30">
+                        1-Bo'limga o'tish &rarr;
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SPACE INFINITY & ZOOM SIMULATION -->
+        <section id="tab-space" class="tab-content hidden space-y-6">
+            <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-violet-400">1. Fazoning Cheksizligi va Masshtablar</h2>
+                        <p class="text-slate-400 text-sm">Slayder yordamida Yerdan boshlab butun koinotning ulkan kengliklarigacha zum qilib ko'ring.</p>
+                    </div>
+                    <div class="flex items-center gap-3 bg-slate-950 px-4 py-2 rounded-xl border border-slate-800">
+                        <span class="text-xs text-slate-400">Masshtab darajasi:</span>
+                        <span id="zoom-level-text" class="text-violet-400 font-bold text-sm">1-bosqich: Yer sirtida</span>
+                    </div>
+                </div>
+
+                <!-- Canvas container -->
+                <div class="relative w-full bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden shadow-inner">
+                    <canvas id="canvasSpace" class="w-full h-80 block"></canvas>
+                    <div class="absolute bottom-4 left-4 right-4 sm:right-auto bg-slate-900/90 backdrop-blur-md border border-slate-800 p-4 rounded-xl text-xs space-y-2 max-w-sm">
+                        <div id="zoom-title" class="font-bold text-violet-300 text-sm">Yer sayyorasi</div>
+                        <div id="zoom-desc" class="text-slate-300 leading-relaxed">Biz yashaydigan Quyosh sistemasidagi uchinchi sayyora. Koinot ichida u juda kichik nuqtadir.</div>
+                    </div>
+                </div>
+
+                <!-- Zoom Slider Controller -->
+                <div class="mt-6 bg-slate-950/60 p-5 rounded-xl border border-slate-800/80 space-y-3">
+                    <div class="flex justify-between text-xs text-slate-400 font-medium">
+                        <span>Yer / Shahar</span>
+                        <span>Quyosh Tizimi</span>
+                        <span>S Somon Yo'li</span>
+                        <span>Cheksiz Koinot</span>
+                    </div>
+                    <input type="range" id="zoomRange" min="1" max="4" value="1" step="1" class="w-full accent-violet-500 cursor-pointer" oninput="updateSpaceZoom(this.value)">
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: 3D COORDINATES SIMULATION -->
+        <section id="tab-coords" class="tab-content hidden space-y-6">
+            <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-indigo-400">2. Fazoning Uch O'lchamli Koordinatalari ($X, Y, Z$)</h2>
+                        <p class="text-slate-400 text-sm">Slayderlar yordamida jismning 3D fazodagi o'rnini o'zgartiring va koordinatalarni kuzating.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="resetCoords()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl text-sm font-medium transition">
+                            Tiklash
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas & Controls Layout -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Canvas (2 cols) -->
+                    <div class="lg:col-span-2 relative w-full bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden shadow-inner flex items-center justify-center">
+                        <canvas id="canvasCoords" class="w-full h-80 block"></canvas>
+                        <div class="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-md border border-slate-800 px-4 py-2 rounded-xl text-xs space-y-1 font-mono">
+                            <div>Koordinatalar: <span class="text-indigo-400 font-bold" id="coord-display">P(50, 50, 50)</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Control Panel (1 col) -->
+                    <div class="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 space-y-5 flex flex-col justify-center">
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-rose-400 font-medium">X o'qi (Eni):</span>
+                                <span id="val-x" class="font-mono font-bold text-rose-400">50</span>
+                            </div>
+                            <input type="range" id="rangeX" min="10" max="90" value="50" class="w-full accent-rose-500 cursor-pointer" oninput="updateCoordsFromSlider()">
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-emerald-400 font-medium">Y o'qi (Bo'yi):</span>
+                                <span id="val-y" class="font-mono font-bold text-emerald-400">50</span>
+                            </div>
+                            <input type="range" id="rangeY" min="10" max="90" value="50" class="w-full accent-emerald-500 cursor-pointer" oninput="updateCoordsFromSlider()">
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-cyan-400 font-medium">Z o'qi (Balandligi):</span>
+                                <span id="val-z" class="font-mono font-bold text-cyan-400">50</span>
+                            </div>
+                            <input type="range" id="rangeZ" min="10" max="90" value="50" class="w-full accent-cyan-500 cursor-pointer" oninput="updateCoordsFromSlider()">
+                        </div>
+
+                        <p class="text-xs text-slate-400 leading-relaxed pt-2 border-t border-slate-800">
+                            💡 <strong class="text-indigo-300">Izoh:</strong> Fazoda istalgan obyektni (masalan, uchib yurgan samolyotni) aniq topish uchun 3 ta qiymat ($X, Y, Z$) talab etiladi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: TIME AXIS SIMULATION -->
+        <section id="tab-time" class="tab-content hidden space-y-6">
+            <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-cyan-400">3. Vaqtni Bir O'lchamli Koordinatada Tasvirlash</h2>
+                        <p class="text-slate-400 text-sm">Vaqt o'qi shkalasi bo'ylab harakatlanib, o'tmish, hozirgi zamon va kelajak voqealarini kuzating.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="toggleTimePlay()" id="time-play-btn" class="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition shadow-lg shadow-cyan-600/20">
+                            Avtomatik oqim
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas container -->
+                <div class="relative w-full bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden shadow-inner">
+                    <canvas id="canvasTime" class="w-full h-80 block"></canvas>
+                    <div class="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-md border border-slate-800 px-4 py-2 rounded-xl text-xs space-y-1">
+                        <div>Vaqt holati: <span id="time-status-label" class="font-bold text-cyan-400">Hozirgi zamon</span></div>
+                    </div>
+                </div>
+
+                <!-- Timeline Slider & Info -->
+                <div class="mt-6 bg-slate-950/60 p-5 rounded-xl border border-slate-800 space-y-4">
+                    <div class="flex justify-between text-xs font-semibold text-slate-400">
+                        <span class="text-indigo-400">&larr; O'tmish (Kecha / Yil oldin)</span>
+                        <span class="text-cyan-400 font-bold">Hozirgi Zamon (Hozir)</span>
+                        <span class="text-emerald-400">Kelajak &rarr;</span>
+                    </div>
+                    <input type="range" id="timeRange" min="0" max="100" value="50" class="w-full accent-cyan-500 cursor-pointer" oninput="updateTimeFromSlider(this.value)">
+                    <div id="time-event-desc" class="bg-slate-900 p-4 rounded-xl border border-slate-800 text-sm text-slate-300">
+                        <!-- Dynamic event description -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: QUIZ -->
+        <section id="tab-quiz" class="tab-content hidden space-y-6">
+            <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-sm max-w-3xl mx-auto">
+                <h2 class="text-2xl font-bold text-indigo-400 mb-2">🧠 Bilimingizni Sinab Ko'ring</h2>
+                <p class="text-slate-400 text-sm mb-6">"Fazo va vaqt" mavzusi bo'yicha tayyorlangan 3 ta interaktiv test savoliga javob bering.</p>
+
+                <div id="quiz-container" class="space-y-6">
+                    <div id="question-box" class="bg-slate-950/80 p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <div class="flex justify-between text-xs text-slate-400">
+                            <span id="quiz-progress">1-savol / 3</span>
+                            <span class="text-indigo-400 font-medium">7-sinf Fizika</span>
+                        </div>
+                        <h3 id="quiz-question" class="text-lg font-semibold text-slate-100"></h3>
+                        <div id="quiz-options" class="grid grid-cols-1 gap-3">
+                            <!-- Options injected by JS -->
+                        </div>
+                    </div>
+
+                    <div id="quiz-feedback" class="hidden p-4 rounded-xl text-sm font-medium"></div>
+
+                    <div class="flex justify-end">
+                        <button id="next-quiz-btn" onclick="nextQuestion()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-xl text-sm font-medium transition shadow-lg shadow-indigo-600/30">
+                            Keyingi savol &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quiz-result" class="hidden text-center space-y-4 py-8">
+                    <div class="text-4xl">🎉</div>
+                    <h3 class="text-2xl font-bold text-emerald-400">Tabriklaymiz! Testni yakunladingiz.</h3>
+                    <p id="quiz-score-text" class="text-slate-300"></p>
+                    <button onclick="restartQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-xl text-sm font-medium transition shadow-lg">
+                        Qaytadan boshlash
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900/40 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
+        7-sinf fizika fani uchun maxsus interaktiv ta'lim platformasi &bull; Fazo va Vaqt
+    </footer>
+
+    <!-- JavaScript Application Code -->
+    <script>
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
+                btn.classList.add('bg-slate-800/80', 'text-slate-300');
+            });
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const activeBtn = document.querySelector(`[data-tab="${tabId}"]`);
+            if(activeBtn) {
+                activeBtn.classList.remove('bg-slate-800/80', 'text-slate-300');
+                activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
+            }
+
+            setTimeout(() => {
+                resizeCanvas('canvasSpace');
+                resizeCanvas('canvasCoords');
+                resizeCanvas('canvasTime');
+            }, 50);
+        }
+
+        function resizeCanvas(id) {
+            const canvas = document.getElementById(id);
+            if (!canvas) return;
+            const parent = canvas.parentElement;
+            canvas.width = parent.clientWidth;
+            canvas.height = 320;
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas('canvasSpace');
+            resizeCanvas('canvasCoords');
+            resizeCanvas('canvasTime');
+        });
+
+        // -------------------------------------------------------------
+        // SIMULATION 1: Space Infinity & Zoom
+        // -------------------------------------------------------------
+        const canvasSpace = document.getElementById('canvasSpace');
+        const ctxSpace = canvasSpace ? canvasSpace.getContext('2d') : null;
+        let currentZoomLevel = 1;
+
+        const zoomData = {
+            1: { title: "Yer Sayyorasi va Shahar", desc: "Biz yashaydigan ona zamin. Koinot ichida u kichik bir nuqta.", color: "#3b82f6" },
+            2: { title: "Quyosh Tizimi", desc: "Markazda Quyosh, uning atrofida aylanuvchi 8 ta sayyora (Yer, Mars, Yupiter va boshqalar).", color: "#f59e0b" },
+            3: { title: "Somon Yo'li Galaktikasi", desc: "Milliardlab yulduzlarni o'z ichiga olgan ulkan spiral galaktika.", color: "#8b5cf6" },
+            4: { title: "Cheksiz Koinot", desc: "Milliardlab galaktikalar va yulduzlar tizimidan iborat cheksiz fazo.", color: "#ec4899" }
+        };
+
+        function updateSpaceZoom(val) {
+            currentZoomLevel = parseInt(val);
+            const data = zoomData[currentZoomLevel];
+            document.getElementById('zoom-title').innerText = data.title;
+            document.getElementById('zoom-desc').innerText = data.desc;
+            document.getElementById('zoom-level-text').innerText = `${currentZoomLevel}-bosqich`;
+        }
+
+        function drawSpaceSim() {
+            if (!ctxSpace || !canvasSpace) return;
+            ctxSpace.clearRect(0, 0, canvasSpace.width, canvasSpace.height);
+
+            // Background stars
+            ctxSpace.fillStyle = '#ffffff';
+            for (let i = 0; i < 60; i++) {
+                let sx = (i * 37 + Date.now() * 0.01 * (currentZoomLevel * 0.2)) % canvasSpace.width;
+                let sy = (i * 53) % canvasSpace.height;
+                ctxSpace.fillRect(sx, sy, 1.5, 1.5);
+            }
+
+            let cx = canvasSpace.width / 2;
+            let cy = canvasSpace.height / 2;
+
+            if (currentZoomLevel === 1) {
+                // Draw Earth
+                ctxSpace.fillStyle = '#3b82f6';
+                ctxSpace.beginPath();
+                ctxSpace.arc(cx, cy, 60, 0, Math.PI * 2);
+                ctxSpace.fill();
+                // Continents representation
+                ctxSpace.fillStyle = '#10b981';
+                ctxSpace.beginPath();
+                ctxSpace.arc(cx - 15, cy - 10, 25, 0, Math.PI * 2);
+                ctxSpace.arc(cx + 20, cy + 20, 20, 0, Math.PI * 2);
+                ctxSpace.fill();
+            } else if (currentZoomLevel === 2) {
+                // Draw Solar System
+                // Sun
+                ctxSpace.fillStyle = '#f59e0b';
+                ctxSpace.beginPath();
+                ctxSpace.arc(cx, cy, 35, 0, Math.PI * 2);
+                ctxSpace.fill();
+                // Orbits & Planets
+                for (let p = 1; p <= 4; p++) {
+                    let r = p * 40;
+                    ctxSpace.strokeStyle = 'rgba(255,255,255,0.15)';
+                    ctxSpace.lineWidth = 1;
+                    ctxSpace.beginPath();
+                    ctxSpace.arc(cx, cy, r, 0, Math.PI * 2);
+                    ctxSpace.stroke();
+
+                    let angle = Date.now() * 0.001 * (5 - p);
+                    let px = cx + Math.cos(angle) * r;
+                    let py = cy + Math.sin(angle) * r;
+                    ctxSpace.fillStyle = p === 3 ? '#3b82f6' : '#cbd5e1';
+                    ctxSpace.beginPath();
+                    ctxSpace.arc(px, py, 6, 0, Math.PI * 2);
+                    ctxSpace.fill();
+                }
+            } else if (currentZoomLevel === 3) {
+                // Draw Galaxy Spiral
+                ctxSpace.save();
+                ctxSpace.translate(cx, cy);
+                ctxSpace.rotate(Date.now() * 0.0005);
+                for (let a = 0; a < Math.PI * 4; a += 0.1) {
+                    let r = a * 15;
+                    let gx = Math.cos(a) * r;
+                    let gy = Math.sin(a) * r;
+                    ctxSpace.fillStyle = '#c084fc';
+                    ctxSpace.fillRect(gx, gy, 3, 3);
+                }
+                ctxSpace.restore();
+            } else {
+                // Infinite Universe (Multiple galaxies)
+                for (let g = 0; g < 12; g++) {
+                    let gx = (g * 110 + 50) % canvasSpace.width;
+                    let gy = (g * 75 + 40) % canvasSpace.height;
+                    ctxSpace.fillStyle = g % 2 === 0 ? '#ec4899' : '#06b6d4';
+                    ctxSpace.beginPath();
+                    ctxSpace.ellipse(gx, gy, 30, 15, g, 0, Math.PI * 2);
+                    ctxSpace.fill();
+                }
+            }
+
+            requestAnimationFrame(drawSpaceSim);
+        }
+
+        // -------------------------------------------------------------
+        // SIMULATION 2: 3D Coordinates
+        // -------------------------------------------------------------
+        const canvasCoords = document.getElementById('canvasCoords');
+        const ctxCoords = canvasCoords ? canvasCoords.getContext('2d') : null;
+
+        let coordState = { x: 50, y: 50, z: 50 };
+
+        function updateCoordsFromSlider() {
+            coordState.x = parseInt(document.getElementById('rangeX').value);
+            coordState.y = parseInt(document.getElementById('rangeY').value);
+            coordState.z = parseInt(document.getElementById('rangeZ').value);
+
+            document.getElementById('val-x').innerText = coordState.x;
+            document.getElementById('val-y').innerText = coordState.y;
+            document.getElementById('val-z').innerText = coordState.z;
+            document.getElementById('coord-display').innerText = `P(${coordState.x}, ${coordState.y}, ${coordState.z})`;
+        }
+
+        function resetCoords() {
+            document.getElementById('rangeX').value = 50;
+            document.getElementById('rangeY').value = 50;
+            document.getElementById('rangeZ').value = 50;
+            updateCoordsFromSlider();
+        }
+
+        function drawCoordsSim() {
+            if (!ctxCoords || !canvasCoords) return;
+            ctxCoords.clearRect(0, 0, canvasCoords.width, canvasCoords.height);
+
+            let originX = canvasCoords.width / 2 - 30;
+            let originY = canvasCoords.height / 2 + 40;
+
+            // Draw 3D Axes
+            ctxCoords.lineWidth = 2;
+
+            // X axis (Red) -> Right & Down
+            ctxCoords.strokeStyle = '#f43f5e';
+            ctxCoords.beginPath();
+            ctxCoords.moveTo(originX, originY);
+            ctxCoords.lineTo(originX + 130, originY + 60);
+            ctxCoords.stroke();
+            ctxCoords.fillStyle = '#f43f5e';
+            ctxCoords.fillText("X (Eni)", originX + 135, originY + 65);
+
+            // Y axis (Green) -> Up
+            ctxCoords.strokeStyle = '#10b981';
+            ctxCoords.beginPath();
+            ctxCoords.moveTo(originX, originY);
+            ctxCoords.lineTo(originX, originY - 140);
+            ctxCoords.stroke();
+            ctxCoords.fillStyle = '#10b981';
+            ctxCoords.fillText("Y (Balandligi)", originX - 25, originY - 145);
+
+            // Z axis (Cyan) -> Left & Down
+            ctxCoords.strokeStyle = '#06b6d4';
+            ctxCoords.beginPath();
+            ctxCoords.moveTo(originX, originY);
+            ctxCoords.lineTo(originX - 120, originY + 50);
+            ctxCoords.stroke();
+            ctxCoords.fillStyle = '#06b6d4';
+            ctxCoords.fillText("Z (Chuqurligi)", originX - 135, originY + 55);
+
+            // Calculate point position mapped from sliders (10 to 90)
+            let px = originX + (coordState.x - 50) * 1.5 - (coordState.z - 50) * 1.0;
+            let py = originY - (coordState.y - 50) * 1.2 + (coordState.x - 50) * 0.4 + (coordState.z - 50) * 0.4;
+
+            // Draw projection lines to axes
+            ctxCoords.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctxCoords.setLineDash([4, 4]);
+            ctxCoords.beginPath();
+            ctxCoords.moveTo(px, py);
+            ctxCoords.lineTo(px, originY); // projection to floor plane
+            ctxCoords.stroke();
+            ctxCoords.setLineDash([]);
+
+            // Draw Point P
+            ctxCoords.fillStyle = '#818cf8';
+            ctxCoords.beginPath();
+            ctxCoords.arc(px, py, 8, 0, Math.PI * 2);
+            ctxCoords.fill();
+
+            ctxCoords.fillStyle = '#ffffff';
+            ctxCoords.font = 'bold 12px Inter';
+            ctxCoords.fillText(`Jism P(${coordState.x}, ${coordState.y}, ${coordState.z})`, px + 12, py - 5);
+
+            requestAnimationFrame(drawCoordsSim);
+        }
+
+        // -------------------------------------------------------------
+        // SIMULATION 3: Time Axis
+        // -------------------------------------------------------------
+        const canvasTime = document.getElementById('canvasTime');
+        const ctxTime = canvasTime ? canvasTime.getContext('2d') : null;
+
+        let timeVal = 50;
+        let isTimeAutoPlaying = false;
+
+        const timeEvents = [
+            { range: [0, 30], title: "O'tmish (Kecha / O'tgan Yillar)", desc: "Sodir bo'lib o'tgan voqealar, xotiralar va tarixiy sanalar. Vaqt o'qining ortdagi qismi." },
+            { range: [31, 70], title: "Hozirgi Zamon (Ayni dam)", desc: "Sizning hozirgi dars o'qiyotgan vaqtingiz. Voqealar sodir bo'layotgan aniq lahza." },
+            { range: [71, 100], title: "Kelajak (Ertangi kun / Rejalar)", desc: "Hali sodir bo'lmagan, oldinda turgan voqealar va rejalashtirilgan ishlar." }
+        ];
+
+        function updateTimeFromSlider(val) {
+            timeVal = parseInt(val);
+            document.getElementById('timeRange').value = timeVal;
+
+            let currentEvent = timeEvents.find(e => timeVal >= e.range[0] && timeVal <= e.range[1]);
+            if (currentEvent) {
+                document.getElementById('time-status-label').innerText = currentEvent.title;
+                document.getElementById('time-event-desc').innerHTML = `<strong>${currentEvent.title}:</strong> ${currentEvent.desc}`;
+            }
+        }
+
+        function toggleTimePlay() {
+            isTimeAutoPlaying = !isTimeAutoPlaying;
+            const btn = document.getElementById('time-play-btn');
+            if (isTimeAutoPlaying) {
+                btn.className = "bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition shadow-lg";
+                btn.innerText = "To'xtatish";
+            } else {
+                btn.className = "bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition shadow-lg shadow-cyan-600/20";
+                btn.innerText = "Avtomatik oqim";
+            }
+        }
+
+        function drawTimeSim() {
+            if (!ctxTime || !canvasTime) return;
+            ctxTime.clearRect(0, 0, canvasTime.width, canvasTime.height);
+
+            if (isTimeAutoPlaying) {
+                timeVal += 0.5;
+                if (timeVal > 100) timeVal = 0;
+                updateTimeFromSlider(timeVal);
+            }
+
+            let cx = canvasTime.width / 2;
+            let cy = canvasTime.height / 2;
+
+            // Draw Timeline axis bar
+            ctxTime.strokeStyle = '#334155';
+            ctxTime.lineWidth = 8;
+            ctxTime.lineCap = 'round';
+            ctxTime.beginPath();
+            ctxTime.moveTo(50, cy);
+            ctxTime.lineTo(canvasTime.width - 50, cy);
+            ctxTime.stroke();
+
+            // Active progress fill
+            let fillWidth = (canvasTime.width - 100) * (timeVal / 100);
+            ctxTime.strokeStyle = '#06b6d4';
+            ctxTime.lineWidth = 8;
+            ctxTime.beginPath();
+            ctxTime.moveTo(50, cy);
+            ctxTime.lineTo(50 + fillWidth, cy);
+            ctxTime.stroke();
+
+            // Sections labels on bar
+            ctxTime.fillStyle = '#94a3b8';
+            ctxTime.font = '11px Inter';
+            ctxTime.fillText("O'tmish", 50, cy - 25);
+            ctxTime.fillText("Hozir", canvasTime.width / 2 - 15, cy - 25);
+            ctxTime.fillText("Kelajak", canvasTime.width - 90, cy - 25);
+
+            // Moving Time Indicator Node
+            let nodeX = 50 + fillWidth;
+            ctxTime.fillStyle = '#ffffff';
+            ctxTime.beginPath();
+            ctxTime.arc(nodeX, cy, 12, 0, Math.PI * 2);
+            ctxTime.fill();
+            ctxTime.fillStyle = '#06b6d4';
+            ctxTime.beginPath();
+            ctxTime.arc(nodeX, cy, 6, 0, Math.PI * 2);
+            ctxTime.fill();
+
+            requestAnimationFrame(drawTimeSim);
+        }
+
+        // -------------------------------------------------------------
+        // QUIZ LOGIC
+        // -------------------------------------------------------------
+        const quizData = [
+            {
+                question: "Koinotning tuzilishi haqidagi ta'limotga ko'ra, fazo qanday xususiyatga ega?",
+                options: [
+                    "Chegaralangan va kichik",
+                    "Cheksiz va kengayib boruvchi",
+                    "Faqat bir nuqtadan iborat",
+                    "O'zgarmas va qattiq"
+                ],
+                answer: 1
+            },
+            {
+                question: "Fazoda jismning joylashishini aniqlash uchun nechta koordinata o'lchami talab etiladi?",
+                options: [
+                    "1 ta (faqat uzunlik)",
+                    "2 ta (eni va bo'yi)",
+                    "3 ta (X, Y, Z — eni, bo'yi, balandligi)",
+                    "4 ta (vaqt ham qo'shib)"
+                ],
+                answer: 2
+            },
+            {
+                question: "Vaqt koordinatasi haqidagi qaysi tasdiq to'g'ri?",
+                options: [
+                    "Vaqt bir o'lchamli bo'lib, o'tmishdan kelajakka bir yo'nalishda oqadi",
+                    "Vaqtni xohlagancha orqaga qaytarish mumkin",
+                    "Vaqt faqat kelajakdan o'tmishga qarab yuradi",
+                    "Vaqt o'lchami mavjud emas"
+                ],
+                answer: 0
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            if (currentQuizIndex >= quizData.length) {
+                document.getElementById('quiz-container').classList.add('hidden');
+                document.getElementById('quiz-result').classList.remove('hidden');
+                document.getElementById('quiz-score-text').innerText = `Siz 3 ta savoldan ${score} tasiga to'g'ri javob berdingiz!`;
+                return;
+            }
+
+            const q = quizData[currentQuizIndex];
+            document.getElementById('quiz-progress').innerText = `${currentQuizIndex + 1}-savol / ${quizData.length}`;
+            document.getElementById('quiz-question').innerText = q.question;
+            
+            const optionsBox = document.getElementById('quiz-options');
+            optionsBox.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3.5 rounded-xl text-sm font-medium transition flex items-center justify-between";
+                btn.innerHTML = `<span>${opt}</span> <span class="text-xs text-slate-500">Tanlash</span>`;
+                btn.onclick = () => selectAnswer(idx, btn);
+                optionsBox.appendChild(btn);
+            });
+
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('next-quiz-btn').classList.add('hidden');
+        }
+
+        function selectAnswer(selectedIdx, btnElement) {
+            const q = quizData[currentQuizIndex];
+            const allBtns = document.getElementById('quiz-options').querySelectorAll('button');
+            
+            allBtns.forEach(b => b.disabled = true);
+            const feedbackBox = document.getElementById('quiz-feedback');
+            feedbackBox.classList.remove('hidden');
+
+            if (selectedIdx === q.answer) {
+                btnElement.classList.remove('bg-slate-900');
+                btnElement.classList.add('bg-emerald-950/80', 'border-emerald-700', 'text-emerald-200');
+                feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-emerald-950/60 border border-emerald-800 text-emerald-300";
+                feedbackBox.innerText = "✅ To'g'ri! Ajoyib natija!";
+                score++;
+            } else {
+                btnElement.classList.remove('bg-slate-900');
+                btnElement.classList.add('bg-rose-950/80', 'border-rose-700', 'text-rose-200');
+                allBtns[q.answer].classList.remove('bg-slate-900');
+                allBtns[q.answer].classList.add('bg-emerald-950/80', 'border-emerald-700', 'text-emerald-200');
+                
+                feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-rose-950/60 border border-rose-800 text-rose-300";
+                feedbackBox.innerText = "❌ Noto'g'ri. To'g'ri javob yashil rangda belgilandi.";
+            }
+
+            document.getElementById('next-quiz-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuizIndex++;
+            loadQuiz();
+        }
+
+        function restartQuiz() {
+            currentQuizIndex = 0;
+            score = 0;
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+            loadQuiz();
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            resizeCanvas('canvasSpace');
+            resizeCanvas('canvasCoords');
+            resizeCanvas('canvasTime');
+
+            requestAnimationFrame(drawSpaceSim);
+            requestAnimationFrame(drawCoordsSim);
+            requestAnimationFrame(drawTimeSim);
+
+            updateSpaceZoom(1);
+            updateCoordsFromSlider();
+            updateTimeFromSlider(50);
+            loadQuiz();
+        };
+    </script>
+</body>
+</html>
