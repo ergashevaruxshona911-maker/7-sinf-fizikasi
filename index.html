@@ -676,6 +676,64 @@ function frame(ts){raf=0;if(!vis)return;if(last===null)last=ts;const dt=Math.min
 function kick(){if(!raf&&vis){last=null;raf=requestAnimationFrame(frame);}}
 draw();let io=null;if('IntersectionObserver' in window){io=new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis){draw();kick();}});io.observe(wrap);}else{vis=true;kick();}
 disposers.push(()=>{vis=false;if(raf)cancelAnimationFrame(raf);if(io)io.disconnect();});}
+/* ===== BAHOLASH: BSB va CHSB ===== */
+const ASM=[
+{n:"BSB-1",t:"Kinematika asoslari",r:"I–III bob · 1–17-§",q:[
+["Poyezdda o‘tirgan yo‘lovchi qaysi jismga nisbatan tinch turadi?",["Platformaga","Poyezd vagoniga","Yo‘l chetidagi daraxtga","Yerga"],1],
+["Jism 3 s da 12 m yo‘l bosdi. Tekis harakat tezligi qancha?",["4 m/s","9 m/s","36 m/s","0,25 m/s"],0],
+["Qaysi kattalik vektor kattalik?",["Vaqt","Yo‘l","Ko‘chish","Massa"],2],
+["Tinchlikdan a = 4 m/s² bilan harakatlangan jismning 3 s dagi tezligi qancha?",["7 m/s","12 m/s","1,3 m/s","36 m/s"],1],
+["Erkin tushayotgan jism 2 s da qancha yo‘l bosadi? (g = 10 m/s²)",["10 m","20 m","40 m","5 m"],1],
+["Aylanish davri T = 2 s bo‘lsa, aylanish chastotasi qancha?",["0,5 Hz","2 Hz","4 Hz","1 Hz"],0]],
+w:[["Avtomobil tinchlikdan 0,5 m/s² tezlanish bilan 10 s harakatlandi. Oxirgi tezligi va bosib o‘tgan yo‘lini toping.","v = at = 0,5·10 = 5 m/s; s = at²/2 = 0,5·100/2 = 25 m."]]},
+{n:"BSB-2",t:"Dinamika asoslari",r:"IV–V bob · 18–35-§",q:[
+["Nyutonning birinchi qonuni nimani ifodalaydi?",["Kuch va tezlanish bog‘lanishini","Jismning inersiya holatini saqlashini","Ta’sir va aks ta’sirni","Tortishish kuchini"],1],
+["Massasi 5 kg jismga 20 N kuch ta’sir etsa, tezlanishi qancha?",["0,25 m/s²","4 m/s²","25 m/s²","100 m/s²"],1],
+["Nyutonning uchinchi qonuniga ko‘ra ta’sir va aks ta’sir kuchlari:",["Kattaligi teng, yo‘nalishi qarama-qarshi","Kattaligi teng, yo‘nalishi bir xil","Kattaligi turlicha","Bitta jismga qo‘yilgan"],0],
+["Bikrligi 200 N/m prujina 0,05 m cho‘zilsa, elastiklik kuchi qancha?",["4 N","10 N","100 N","0,25 N"],1],
+["Massasi 50 kg jismga ta’sir etuvchi og‘irlik kuchi qancha? (g = 10 m/s²)",["50 N","5 N","500 N","5000 N"],2],
+["Ishqalanish koeffitsiyenti 0,2, bosim kuchi 150 N. Sirpanish ishqalanish kuchi qancha?",["7,5 N","30 N","300 N","0,0013 N"],1]],
+w:[["Massasi 1000 kg avtomobil 2 m/s² tezlanish bilan harakatlanmoqda. Ishqalanishni hisobga olmay, dvigatelning tortish kuchini toping.","F = ma = 1000·2 = 2000 N."]]},
+{n:"BSB-3",t:"Saqlanish qonunlari",r:"VI–VII bob · 36–46-§",q:[
+["Massasi 3 kg jism 4 m/s tezlik bilan harakatlanmoqda. Impulsi qancha?",["7 kg·m/s","12 kg·m/s","1,33 kg·m/s","0,75 kg·m/s"],1],
+["Impulsning saqlanish qonuni qaysi sistemada bajariladi?",["Yopiq sistemada","Faqat tinch jismlarda","Faqat suyuqlikda","Hech qachon"],0],
+["Massasi 2 kg yukni 3 m balandlikka ko‘tarishda bajarilgan ish qancha? (g = 10 m/s²)",["6 J","60 J","600 J","5 J"],1],
+["600 J ish 20 s da bajarilsa, quvvat qancha?",["30 W","12 000 W","0,033 W","620 W"],0],
+["Qarshiliksiz erkin tushayotgan jismda energiya qanday o‘zgaradi?",["Potensial energiya kinetikka aylanadi, to‘liq energiya saqlanadi","To‘liq energiya ortadi","To‘liq energiya kamayadi","Energiya nolga teng bo‘ladi"],0],
+["Foydali ish 400 J, FIK = 80 % bo‘lsa, to‘liq ish qancha?",["320 J","500 J","480 J","800 J"],1]],
+w:[["Massasi 2 kg jism 20 m balandlikdan erkin tushmoqda (g = 10 m/s²). Yerga urilish tezligini energiyaning saqlanish qonuni bilan toping.","mgh = mv²/2, v = √(2gh) = √(2·10·20) = 20 m/s."]]},
+{n:"CHSB-1",t:"Chorak bo‘yicha summativ baholash (I–IV bob)",r:"1–25-§ · 8 ta test, 2 ta masala",q:[
+["Tezligi 15 m/s bo‘lgan jism 8 s da qancha yo‘l bosadi?",["23 m","120 m","1,9 m","12 m"],1],
+["Tezlik–vaqt grafigi vaqt o‘qiga parallel to‘g‘ri chiziq bo‘lsa, harakat qanday?",["Tekis","Tekis tezlanuvchan","Jism tinch","Aylanma"],0],
+["v₀ = 2 m/s, a = 3 m/s², t = 4 s. Oxirgi tezlik qancha?",["14 m/s","12 m/s","6 m/s","10 m/s"],0],
+["Yuqoriga v₀ = 20 m/s bilan otilgan jism qanday maksimal balandlikka ko‘tariladi? (g = 10 m/s²)",["10 m","20 m","40 m","2 m"],1],
+["R = 2 m, v = 4 m/s bo‘lsa, markazga intilma tezlanish qancha?",["2 m/s²","8 m/s²","16 m/s²","0,5 m/s²"],1],
+["Massasi 4 kg jism 3 m/s² tezlanish olishi uchun qancha kuch kerak?",["0,75 N","7 N","12 N","1,3 N"],2],
+["Nyutonning birinchi qonuni qanday ataladi?",["Inersiya qonuni","Gravitatsiya qonuni","Guk qonuni","Arximed qonuni"],0],
+["Prujina 0,1 m cho‘zilganda 5 N kuch hosil bo‘ldi. Bikrligi qancha?",["0,5 N/m","50 N/m","5 N/m","500 N/m"],1]],
+w:[["Jism v₀ = 5 m/s tezlik va a = 2 m/s² tezlanish bilan 4 s tekis tezlanuvchan harakatlandi. Oxirgi tezlik va bosib o‘tilgan yo‘lni toping.","v = v₀ + at = 5 + 2·4 = 13 m/s; s = v₀t + at²/2 = 20 + 16 = 36 m."],
+["Massasi 2 kg jism R = 0,5 m radiusli aylana bo‘ylab 3 m/s tezlik bilan tekis harakatlanmoqda. Markazga intilma tezlanish va kuchni toping.","a = v²/R = 9/0,5 = 18 m/s²; F = ma = 2·18 = 36 N."]]},
+{n:"CHSB-2",t:"Chorak bo‘yicha summativ baholash (V–VII bob)",r:"26–46-§ · 8 ta test, 2 ta masala",q:[
+["Jismlardan birining massasi 2 marta ortsa, butun olam tortishish kuchi qanday o‘zgaradi?",["2 marta ortadi","2 marta kamayadi","O‘zgarmaydi","4 marta ortadi"],0],
+["Massasi 70 kg odam 3 m/s² tezlanish bilan pastga tushayotgan liftda. Uning vazni qancha? (g = 10 m/s²)",["700 N","490 N","910 N","210 N"],1],
+["Zararli ishqalanishni kamaytirishning qaysi usuli to‘g‘ri?",["Sirtni moylash","Bosim kuchini oshirish","Sirtni dag‘allashtirish","Massani oshirish"],0],
+["Impulsning SI dagi birligi qaysi?",["kg·m/s","N·m","J","W"],0],
+["Massasi 0,5 kg jism 6 m/s tezlik bilan harakatlanmoqda. Kinetik energiyasi qancha?",["3 J","9 J","18 J","1,5 J"],1],
+["Massasi 4 kg jism 2,5 m balandlikda. Potensial energiyasi qancha? (g = 10 m/s²)",["10 J","25 J","100 J","250 J"],2],
+["Quvvatning SI dagi birligi qaysi?",["Joul","Vatt","Nyuton","Paskal"],1],
+["Yerning sun’iy yo‘ldoshi nima uchun Yer atrofida aylanadi?",["Tortishish kuchi markazga intilma kuch vazifasini bajaradi","Unga hech qanday kuch ta’sir etmaydi","Havo uni itaradi","Massasi nolga teng"],0]],
+w:[["Massasi 60 kg odam 5 m balandlikka o‘zgarmas tezlik bilan 10 s da ko‘tarildi. Bajargan ishi va quvvatini toping. (g = 10 m/s²)","A = mgh = 60·10·5 = 3000 J; P = A/t = 3000/10 = 300 W."],
+["Massasi 3 kg jism 2 m/s tezlik bilan harakatlanib, tinch turgan 1 kg massali jismga yopishib qoldi. Birgalikdagi tezlikni toping.","m₁v₁ = (m₁ + m₂)v, v = 3·2/4 = 1,5 m/s."]]}
+];
+function asm(k){stopSims();window.scrollTo(0,0);side.classList.remove('open');document.querySelectorAll('#side a').forEach(a=>a.classList.remove('on'));const sa=side.querySelector('a[data-a="'+k+'"]');if(sa)sa.classList.add('on');
+const A=ASM[k];main.innerHTML='';main.appendChild(h('div','lh','<small>'+A.r+'</small><h1>'+A.n+'. '+A.t+'</h1>'));
+let ok=0,dn=0;const sc=h('div','pause','');const upd=()=>{sc.innerHTML='<b>Natija:</b> '+ok+' / '+A.q.length+' · javob berilgan: '+dn;};upd();main.appendChild(sc);
+A.q.forEach((q,i)=>{const c=h('div','card quiz','<h3>'+(i+1)+'. '+q[0]+'</h3>');q[1].forEach((o,n)=>{const b=h('button','',o);b.onclick=()=>{if(c.dataset.d)return;c.dataset.d=1;dn++;if(n===q[2]){ok++;b.classList.add('ok');}else{b.classList.add('no');c.querySelectorAll('button')[q[2]].classList.add('ok');}upd();ss('f7:A:'+k,ok+'/'+A.q.length);};c.appendChild(b);});main.appendChild(c);});
+A.w.forEach((w,i)=>{const c=h('div','card','<h3>Masala '+(i+1)+'</h3><p>'+w[0]+'</p>');const s=h('div','life','<b>Yechim:</b> '+w[1]);s.style.display='none';const bw=h('div','btns'),b=h('button','','Yechimni ko‘rish');b.onclick=()=>{s.style.display=s.style.display==='none'?'block':'none';};bw.appendChild(b);c.append(bw,s);main.appendChild(c);});
+const nav=h('div','nav'),hb=h('button','g','← Bosh sahifa'),rb=h('button','','↻ Qayta boshlash');hb.onclick=()=>go(-1);rb.onclick=()=>asm(k);nav.append(hb,rb);main.appendChild(nav);}
+const _bs=buildSide,_hm=home;
+buildSide=function(){_bs();side.appendChild(h('h4','','BAHOLASH · BSB VA CHSB'));ASM.forEach((A,k)=>{const a=h('a','',A.n+'. '+A.t);a.dataset.a=k;a.onclick=()=>asm(k);side.appendChild(a);});};
+home=function(){_hm();main.appendChild(h('h2','g','BAHOLASH · BO‘LIM (BSB) VA CHORAK (CHSB) BO‘YICHA SUMMATIV BAHOLASH'));const g=h('div','grid');ASM.forEach((A,k)=>{const b=h('button','','<b>'+A.n+'</b><br><small>'+A.t+'</small>');b.onclick=()=>asm(k);g.appendChild(b);});main.appendChild(g);};
 document.getElementById('menu').onclick=()=>side.classList.toggle('open');
 buildSide();go(-1);
 
